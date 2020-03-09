@@ -1,0 +1,15 @@
+{
+  "name": "lorikeet-election",
+  "version": "1.0.0",
+  "description": "practice electron",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HiepPP",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^3.2.0",
+    "osenv": "^0.1.5"
+  }
+}
