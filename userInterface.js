@@ -109,10 +109,11 @@ function convertFolderPathIntoLink(folderPath) {
 function bindCurrentFolderPath() {
   const load = event => {
     const folderPath = event.target.getAttribute('data-path');
-    loadDirectory(folderPath);
-    for (var i = 0; i < paths.length; i++) {
-      paths[i].addEventListener('click', load, false);
-    }
+    loadDirectory(folderPath)();
+  };
+  const paths = document.getElementsByClassName('path');
+  for (var i = 0; i < paths.length; i++) {
+    paths[i].addEventListener('click', load, false);
   }
 }
 
