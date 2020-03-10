@@ -1,8 +1,7 @@
 'use strict';
 
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const {app, BrowserWindow} = require('electron');
+require('electron-reload')(__dirname);
 
 let mainWindow = null;
 
@@ -14,12 +13,12 @@ app.on('window-all-closed', () => {
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-                                   webPreferences: {
-                                     nodeIntegration: true
-                                   }
-                                 });
-  mainWindow.loadURL(`file://${app.getAppPath()}/index.html`);
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
   mainWindow.on('closed', () => {
-    mainWindow = null
+    mainWindow = null;
   });
 });

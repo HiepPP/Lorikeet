@@ -1,23 +1,24 @@
 <html>
+
 <head>
   <title>Lorikeet</title>
-  <link rel="stylesheet" href="app.css"/>
-  <script src="app.js"></script>
+  <link rel="stylesheet" href="app.css" />
 </head>
+
 <body>
-<template id="item-template">
-  <div class="item">
-    <img class="icon"/>
-    <div class="filename"></div>
+  <template id="item-template">
+    <div class="item">
+      <img class="icon" />
+      <div class="filename"></div>
+    </div>
+  </template>
+  <div id="toolbar">
+    <div id="current-folder">
+    </div>
   </div>
-</template>
-<div id="toolbar">
-  <div id="current-folder">
-    <script>
-      document.write(getUsersHomeFolder());
-    </script>
-  </div>
-</div>
 </body>
 <div id="main-area"></div>
+<script src="fileSystem.js"></script>
+<script src="app.js"></script>
+
 </html>
