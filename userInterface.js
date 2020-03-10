@@ -5,7 +5,9 @@ const fileSystem = require('./fileSystem');
 const {resetIndex} = require('./search');
 
 function displayFolderPath(folderPath) {
-  document.getElementById('current-folder').innerText = folderPath;
+  document.getElementById('current-folder')
+      .innerHTML = convertFolderPathIntoLink(folderPath);
+  bindCurrentFolderPath();
 }
 
 function clearView() {
@@ -41,6 +43,10 @@ function displayFile(file) {
   if (file.type === 'directory') {
     clone.querySelector('img').addEventListener('dblclick', () => {
       loadDirectory(file.path)();
+    }, false);
+  } else {
+    clone.querySelector('img').addEventListener('dblclick', () => {
+      fileSystem.openFile(file.path)();
     }, false);
   }
 
@@ -86,6 +92,27 @@ function resetFilter() {
   const items = document.getElementsByClassName('item');
   for (var i = 0; i < items.length; i++) {
     items[i].style = null;
+  }
+}
+
+function convertFolderPathIntoLink(folderPath) {
+  const folders = folderPath.split(path.sep);
+  const contents = [];
+  let pathAtFolder = '';
+  folders.forEach(folder => {
+    pathAtFolder += folder + path.sep;
+    contents.push(`<span class="path" data-path="${pathAtFolder.slice(0, -1)}">${folder}</span>`);
+  });
+  return contents.join(path.sep).toString();
+}
+
+function bindCurrentFolderPath() {
+  const load = event => {
+    const folderPath = event.target.getAttribute('data-path');
+    loadDirectory(folderPath);
+    for (var i = 0; i < paths.length; i++) {
+      paths[i].addEventListener('click', load, false);
+    }
   }
 }
 

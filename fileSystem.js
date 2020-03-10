@@ -5,40 +5,52 @@ const fs = require('fs');
 const osenv = require('osenv');
 const path = require('path');
 
+let shell;
+if (process.versions.electron) {
+  shell = require('electron').shell;
+} else {
+  shell = window.require('nw.gui').Shell;
+}
+
 function getUsersHomeFolder() {
-    return osenv.home();
+  return osenv.home();
 }
 
 function getFilesInFolder(folderPath, cb) {
-    fs.readdir(folderPath, cb);
+  fs.readdir(folderPath, cb);
 }
 
 function inspectAndDescribeFile(filePath, cb) {
-    let result = {
-        file: path.basename(filePath),
-        path: filePath,
-        type: ''
-    }
+  let result = {
+    file: path.basename(filePath),
+    path: filePath,
+    type: ''
+  };
 
-    fs.stat(filePath, (err, stat) => {
-        if (err) {
-            cb(err);
-        } else {
-            result.type = stat.isFile() ? 'file' : 'directory';
-            cb(err, result)
-        }
-    })
+  fs.stat(filePath, (err, stat) => {
+    if (err) {
+      cb(err);
+    } else {
+      result.type = stat.isFile() ? 'file' : 'directory';
+      cb(err, result)
+    }
+  })
 }
 
 function inspectAndDescribeFiles(folderPath, files, cb) {
-    async.map(files, (file, asyncCb) => {
-        let resolvedFilePath = path.resolve(folderPath, file);
-        inspectAndDescribeFile(resolvedFilePath, asyncCb);
-    }, cb)
+  async.map(files, (file, asyncCb) => {
+    let resolvedFilePath = path.resolve(folderPath, file);
+    inspectAndDescribeFile(resolvedFilePath, asyncCb);
+  }, cb)
+}
+
+function openFile(filePath) {
+  shell.openItem(filePath);
 }
 
 module.exports = {
-    getFilesInFolder,
-    getUsersHomeFolder,
-    inspectAndDescribeFiles
-}
+  getFilesInFolder,
+  getUsersHomeFolder,
+  inspectAndDescribeFiles,
+  openFile
+};
