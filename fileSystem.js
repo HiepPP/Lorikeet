@@ -25,7 +25,6 @@ function inspectAndDescribeFile(filePath, cb) {
             cb(err);
         } else {
             result.type = stat.isFile() ? 'file' : 'directory';
-            console.log(result)
             cb(err, result)
         }
     })
