@@ -10,18 +10,16 @@ function resetIndex(files = []) {
     this.ref('path');
     for (const file of files) {
       this.add({
-                 "file": file.file,
-                 "type": file.type,
-                 "path": file.path
-               });
+        "file": file.file,
+        "type": file.type,
+        "path": file.path
+      });
     }
   });
 }
 
 function find(query, cb) {
   const results = index.search(query);
-  if (results.length > 0) {
-  }
   cb(results);
 }
 
